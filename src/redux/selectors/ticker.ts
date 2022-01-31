@@ -4,4 +4,5 @@ import { AppState } from '../reducers'
 
 const selectTickerState = (state: AppState): ticker.TickerState => state.tickerReducer
 
-export const selectAllOrders = createSelector(selectTickerState, (state) => state.orders)
+export const selectBidOrders = createSelector(selectTickerState, (order) => order.bid)
+export const selectAskOrders = createSelector(selectTickerState, (order) => order.ask)

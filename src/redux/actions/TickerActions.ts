@@ -15,7 +15,7 @@ export enum TickerActionTypes {
 
 export const connectWS = createAction(
   TickerActionTypes.CONNECT_WS,
-  (payload: { callback: () => void }) => payload
+  (payload: { callback: (data: OrderState) => void }) => payload
 )
 
 export const successConnectWS = createAction(TickerActionTypes.SUCCESS_CONNECT_WS)

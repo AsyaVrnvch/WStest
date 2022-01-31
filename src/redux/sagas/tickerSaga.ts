@@ -2,7 +2,6 @@ import { put, call } from 'redux-saga/effects'
 import { AnyAction } from 'redux'
 import * as TickerActionTypes from '../actions/TickerActions'
 import * as apiWS from '../../api/websocket'
-import { OrderState } from '../reducers/ticker'
 
 export function* connectWS(action: AnyAction) {
   try {

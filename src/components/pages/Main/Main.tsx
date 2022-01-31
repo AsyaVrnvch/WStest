@@ -1,10 +1,8 @@
 import React from 'react'
-import Table from './components/Table/Table'
+import OrdersBook from './components/OrdersBook/OrdersBook'
 
 const Main: React.FC = () => {
-  return (
-      <Table />
-  )
+  return <OrdersBook />
 }
 
 export default Main
