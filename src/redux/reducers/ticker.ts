@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { errorCloseWS, TickerActionTypes } from '../actions/TickerActions'
+import { TickerActionTypes } from '../actions/TickerActions'
 
 const initialState = {
   ask: [],
@@ -26,7 +26,6 @@ export interface MessageState {
   value: Number
   size: Number
   time: Number
-  first: Boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/default-param-last
@@ -50,15 +49,32 @@ export default function tickerReducer(state: TickerState = initialState, action:
     case TickerActionTypes.GET_MESSAGE:
       const { ask, askSize, bid, bidSize, time } = action.payload
 
-      const askRepeat = state.ask.find((elem) => elem.value === ask)
-      const bidRepeat = state.bid.find((elem) => elem.value === bid)
+      const askIndex = state.ask.findIndex((elem) => elem.value === ask)
+      const bidIndex = state.bid.findIndex((elem) => elem.value === bid)
 
-      const askObj = askRepeat
-        ? [...state.ask]
-        : [...state.ask, { value: ask, size: askSize, time, first: true }]
-      const bidObj = bidRepeat
-        ? [...state.bid]
-        : [...state.bid, { value: bid, size: bidSize, time, first: true }]
+      let askObj
+      let bidObj
+      if (askIndex !== -1) {
+        state.ask[askIndex] = {
+          value: ask,
+          size: askSize,
+          time,
+        }
+        askObj = [...state.ask]
+      } else {
+        askObj = [...state.ask, { value: ask, size: askSize, time }]
+      }
+
+      if (bidIndex !== -1) {
+        state.bid[bidIndex] = {
+          value: bid,
+          size: bidSize,
+          time,
+        }
+        bidObj = [...state.bid]
+      } else {
+        bidObj = [...state.bid, { value: bid, size: bidSize, time }]
+      }
 
       askObj.sort((a, b) => b.value - a.value)
       bidObj.sort((a, b) => b.value - a.value)
